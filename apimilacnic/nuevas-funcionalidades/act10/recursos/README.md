@@ -3,11 +3,11 @@
 Aquí se encuentran los recursos necesarios para el desarrollo de la actividad.
 
 
-Funcionalidades de MiLACNIC:
+**Funcionalidades de MiLACNIC:**
 
 https://lacnic.zendesk.com/hc/es
 
-Credenciales de acceso al demo de MiLACNIC:
+**Credenciales de acceso al demo de MiLACNIC:**
 
 https://milacnic-demo.lacnic.net/lacnic/login
 
