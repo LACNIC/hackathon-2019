@@ -3,23 +3,23 @@
 Aquí se encuentran los recursos necesarios para el desarrollo de la actividad.
 
 
-Dirección para conectarse al Demo:
+**Dirección para conectarse al Demo:**  
 https://api.milacnic-demo.lacnic.net/lacnic/0.9/swagger-ui.html
 
 
-Credenciales de Prueba:
+**Credenciales de Prueba:**
 
-OrgId: UY-OPPL-LACNIC
-User: apilacnic@gmail.com
-Pass: Apilacnic**
-ClientID: SDDF4AZ4NsRavImu0VvcLRcm4c5KpkHI
-ClientSecret: wTyZqSyqD3-1ejfoNInEIrFGVdNRHEi1jpvwKPvCf6F8uY0BomrXr5O9SBL9GXUu
+**OrgId:** UY-OPPL-LACNIC  
+**User:** apilacnic@gmail.com  
+**Pass:** Apilacnic**  
+**ClientID:** SDDF4AZ4NsRavImu0VvcLRcm4c5KpkHI  
+**ClientSecret:** wTyZqSyqD3-1ejfoNInEIrFGVdNRHEi1jpvwKPvCf6F8uY0BomrXr5O9SBL9GXUu
 
 
-RateLimit API MiLACNIC
+**RateLimit API MiLACNIC**
 
-Operación                    |  CantidadConsultas Permitidas  |  MinutosEnQueAdiciona  |  CantidadConsultasSeAdicionan
--------------------------  |  -----------------------------------  |  ---------------------------  |  -------------------------------------
+Operación                    |  Cantidad Consultas Permitidas  |  Minutos En Que Adiciona  |  Cantidad Consultas Se Adicionan
+-------------------------  |  ------------------------------------  |  -----------------------------  |  ----------------------------------------
 CONTACT_INFO  |  100  |  3  |  3
 ORG_INFO  |  100  |  2  |  3
 SUBASIGNAR_INFO  |  100  |  2  |  3
