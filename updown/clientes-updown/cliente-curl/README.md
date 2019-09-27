@@ -23,6 +23,7 @@ Instalar Curl:
 - https://www.cyberciti.biz/faq/how-to-install-curl-command-on-a-ubuntu-linux/
 - https://parzibyte.me/blog/2018/04/03/instalar-curl-windows/
 - http://www.ivanmanga.com/instalar-curl-ubuntu-16-xenia/
+- https://gist.github.com/subfuzion/08c5d85437d5d4f00e58
 
 URL destino child-request:
  -rpki-demo.lacnic.net/provisioning/rpki-setup
