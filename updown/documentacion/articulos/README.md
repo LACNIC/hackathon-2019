@@ -12,11 +12,14 @@ Antes de empezar con la tarea, debe instalar git en su máquina y clonar el repo
 -----------------------------------------------------------------------
 DESCRIPCIÓN TAREA:
 
-Crear artículo acerca de las operaciones updown y especificar el funcionamiento para cada una.
-Crear artículo explicando el funcionamiento del publication protocol y cómo implementarlo.
+1)Crear artículo acerca de las operaciones updown y especificar el funcionamiento para cada una.
 
 Recursos:
 - https://tools.ietf.org/html/rfc6492
+
+2)Crear artículo explicando el funcionamiento del publication protocol y cómo implementarlo.
+
+Recursos: 
 - https://tools.ietf.org/html/rfc8181
 
 # Nota: Para realizar todas las tareas, acceda a: https://trello.com/b/wG3iS6Sp/updown
