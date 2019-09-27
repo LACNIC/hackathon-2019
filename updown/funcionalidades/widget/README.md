@@ -19,6 +19,7 @@ Recursos:
 - http://yagoperez.com/creando_widgets_con_jquery/
 - http://alexmarandon.com/articles/web_widget_jquery/
 
+# Nota: Para realizar todas las tareas, acceda a: https://trello.com/b/wG3iS6Sp/updown
 ----------------------------------------------------------------------
 FIN: 
 
