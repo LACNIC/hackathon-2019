@@ -24,7 +24,7 @@ DESCRIPCIÓN TAREA:
 ¿Acciones constantes?
 ¿Qué operaciones se ejecutan?
 
-2)Crear artículo sobre sitios online que cuentan con estadísticas de RPKI.
+3)Crear artículo sobre sitios online que cuentan con estadísticas de RPKI.
 -Listar estos sitios.
 -Explicar la información que contienen.
 
