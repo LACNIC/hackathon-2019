@@ -7,7 +7,7 @@ Antes de empezar con la tarea, debe instalar git en su máquina y clonar el repo
  - Crear carpeta git local
  - Clonar repositorio: Dentro de carpeta git creada, correr por terminal:
  git clone https://github.com/LACNIC/hackathon-2019.git
--Repositorio listo disponible localmente.
+ - Repositorio listo disponible localmente.
 
 -----------------------------------------------------------------------
 DESCRIPCIÓN TAREA:
