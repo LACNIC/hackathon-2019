@@ -12,19 +12,19 @@ Antes de empezar con la tarea, debe instalar git en su máquina y clonar el repo
 -----------------------------------------------------------------------
 DESCRIPCIÓN TAREA:
 
--Crear reporte sobre análisis de log apache con información relevante, como: 
+1)Crear reporte sobre análisis de log apache con información relevante, como: 
 ¿Desde qué IP se accede?
 ¿En qué horarios?
 ¿Acciones constantes?
 ¿A qué servicios?
 
--Crear reporte sobre análisis de log rsync con información relevante, como: 
+2)Crear reporte sobre análisis de log rsync con información relevante, como: 
 ¿Desde qué IP se realizo la operacion?
 ¿En qué horarios?
 ¿Acciones constantes?
 ¿Qué operaciones se ejecutan?
 
--Crear artículo sobre sitios online que cuentan con estadísticas de RPKI.
+2)Crear artículo sobre sitios online que cuentan con estadísticas de RPKI.
 -Listar estos sitios.
 -Explicar la información que contienen.
 
