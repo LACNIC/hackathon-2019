@@ -19,10 +19,11 @@ Documentación RFCs:
  - https://tools.ietf.org/html/rfc8183
  - https://tools.ietf.org/html/rfc6492
 
-Repositorio git:
- - Clonar repositorio github de proyecto hackathon en carpeta git local, https://github.com/LACNIC/hackathon-2019.git
-
--instalar ID de desarrollo. Ejemplo Eclipse:
+Obtener cliente java de Repositorio git:
+ - Cliente java, se encuentra dentro de:
+   hackathon-2019/updown/clientes-updown/cliente-java/provisioning-client/
+   
+Instalar ID de desarrollo. Ejemplo Eclipse:
   - https://www.eclipse.org/downloads/
   - https://www.eclipse.org/downloads/packages/
 
