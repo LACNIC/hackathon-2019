@@ -27,6 +27,7 @@ Instalar ID de desarrollo. Ejemplo Eclipse:
   - https://www.eclipse.org/downloads/
   - https://www.eclipse.org/downloads/packages/
 
+Nota: Para realizar todas las tareas, acceda a: https://trello.com/b/wG3iS6Sp/updown
 ----------------------------------------------------------------------
 FIN: 
 
