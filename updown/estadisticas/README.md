@@ -15,8 +15,8 @@ DESCRIPCIÓN TAREA:
 1)Crear reporte sobre análisis de log apache con información relevante, como: 
 ¿Desde qué IP se accede?
 ¿En qué horarios?
-¿Acciones constantes?
-¿A qué servicios?
+¿Qué pedidos se realizan a /provisioning/rpki-updown?
+¿Cuántos pedidos diarios a /provisioning/rpki-updown?
 
 2)Crear reporte sobre análisis de log rsync con información relevante, como: 
 ¿Desde qué IP se realizo la operacion?
