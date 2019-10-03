@@ -53,7 +53,7 @@ public class GenerateMftCrl {
 
 		createValidManifestEECertificate();
 		X509ResourceCertificateParser parser2 = new X509ResourceCertificateParser();
-		parser2.parse("<cert>", Files.toByteArray(new File(UtilsConstantes.getRutaMftCrlCargarCertEe())));
+		parser2.parse("<cert>", Files.toByteArray(new File(Utils.getRutaMftCrlCargarCertEe())));
 		X509ResourceCertificate certificadoEe = parser2.isSuccess() ? parser2.getCertificate() : null;
 		ManifestCmsBuilder subject = new ManifestCmsBuilder();
 		subject.withManifestNumber(BigInteger.valueOf(68));
@@ -106,7 +106,7 @@ public class GenerateMftCrl {
 	}
 
 	private static void writeToDisk(String fileName, byte[] encoded) throws Exception {
-		File file = new File(UtilsConstantes.getRutaMftCrl() + fileName);
+		File file = new File(Utils.getRutaMftCrl() + fileName);
 		Files.write(encoded, file);
 	}
 

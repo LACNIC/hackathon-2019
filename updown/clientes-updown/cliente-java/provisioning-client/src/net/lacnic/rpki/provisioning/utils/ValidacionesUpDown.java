@@ -13,8 +13,8 @@ import javax.xml.validation.Validator;
 import org.xml.sax.SAXException;
 
 public class ValidacionesUpDown {
-	private static final String SCHEMA_LOCATION = UtilsConstantes.getResources() + "provisioning.rnc";
-	private static final String SCHEMA_LOCATION2 = UtilsConstantes.getResources() + "provisioning2.rnc";
+	private static final String SCHEMA_LOCATION = Utils.getResources() + "provisioning.rnc";
+	private static final String SCHEMA_LOCATION2 = Utils.getResources() + "provisioning2.rnc";
 
 	public static boolean validateAgainstRelaxNg(String xml) throws IOException, SAXException {
 		try {

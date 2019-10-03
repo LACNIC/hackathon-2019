@@ -3,11 +3,8 @@ package net.lacnic.rpki.provisioning.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.net.URI;
-import java.nio.charset.Charset;
 import java.security.KeyPair;
-import java.security.cert.X509CRL;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 
@@ -15,22 +12,16 @@ import javax.naming.NamingException;
 import javax.security.auth.x500.X500Principal;
 
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
-import org.joda.time.DateTime;
 
 import com.google.common.io.Files;
 
 import net.lacnic.rpki.provisioning.client.RPKIProvisioningWsClient;
 import net.ripe.ipresource.IpResourceSet;
-import net.ripe.rpki.commons.crypto.crl.X509CrlBuilder;
-import net.ripe.rpki.commons.crypto.x509cert.X509CertificateBuilderHelper;
 import net.ripe.rpki.commons.crypto.x509cert.X509CertificateParser;
 import net.ripe.rpki.commons.provisioning.cms.ProvisioningCmsObject;
-import net.ripe.rpki.commons.provisioning.cms.ProvisioningCmsObjectBuilder;
 import net.ripe.rpki.commons.provisioning.cms.ProvisioningCmsObjectParser;
-import net.ripe.rpki.commons.provisioning.cms.ProvisioningCmsObjectValidator;
 import net.ripe.rpki.commons.provisioning.identity.ParentIdentity;
 import net.ripe.rpki.commons.provisioning.identity.ParentIdentitySerializer;
-import net.ripe.rpki.commons.provisioning.payload.AbstractProvisioningPayload;
 import net.ripe.rpki.commons.provisioning.payload.PayloadMessageType;
 import net.ripe.rpki.commons.provisioning.payload.error.RequestNotPerformedResponsePayload;
 import net.ripe.rpki.commons.provisioning.payload.error.RequestNotPerformedResponsePayloadSerializerBuilder;
@@ -39,13 +30,10 @@ import net.ripe.rpki.commons.provisioning.payload.issue.request.CertificateIssua
 import net.ripe.rpki.commons.provisioning.payload.issue.request.CertificateIssuanceRequestPayloadSerializerBuilder;
 import net.ripe.rpki.commons.provisioning.payload.issue.response.CertificateIssuanceResponsePayload;
 import net.ripe.rpki.commons.provisioning.payload.issue.response.CertificateIssuanceResponsePayloadSerializerBuilder;
-import net.ripe.rpki.commons.provisioning.x509.ProvisioningCmsCertificate;
-import net.ripe.rpki.commons.provisioning.x509.ProvisioningCmsCertificateBuilder;
 import net.ripe.rpki.commons.provisioning.x509.ProvisioningIdentityCertificate;
 import net.ripe.rpki.commons.provisioning.x509.pkcs10.RpkiCaCertificateRequestBuilder;
 import net.ripe.rpki.commons.validation.ValidationCheck;
 import net.ripe.rpki.commons.validation.ValidationLocation;
-import net.ripe.rpki.commons.validation.ValidationOptions;
 import net.ripe.rpki.commons.validation.ValidationResult;
 import net.ripe.rpki.commons.xml.XStreamXmlSerializer;
 
@@ -58,26 +46,36 @@ public class Issue {
 	// public static X500Principal RPKI_CA_CERT_REQUEST_CA_SUBJECT = new
 	// X500Principal("CN=prueba lacnic O=LACNIC");
 	public static X500Principal RPKI_CA_CERT_REQUEST_CA_SUBJECT = new X500Principal("CN=66666666666666777777777777");
-	private static String asn = "11751";
-	private static String ipv4 = "177.234.144.0-177.234.191.255";
-	private static String ipv6 = "2804:44fc::/32";
+	private static String asn = null;
+	private static String ipv4 = null;
+	private static String ipv6 = null;
+
+	private static String eEPrivateKeyName = "private_EE_CMS.key";
+	private static String eEPublicKeyName = "public_EE_CMS.key";
+
+	private static String issuancePrivateKeyName = "private_issuance.key";
+	private static String issuancePublicKeyName = "public_issuance.key";
+
+	private static String childPrivateKeyName = "private_child.key";
+	private static String childPublicKeyName = "public_child.key";
+
+	private static String childPath = Utils.getRutaChild();
+	private static String issuancePath = Utils.getRutaIssuance();
 
 	public static void main(String[] args) throws NamingException, Exception {
 		primeraEmision();
 	}
 
-	private static void primeraEmision() throws UnsupportedEncodingException, IOException {
+	private static void primeraEmision() throws UnsupportedEncodingException, Exception {
 		// 0. Obtener parent Response
 		try {
 			ParentIdentitySerializer serializer = new ParentIdentitySerializer();
-			ParentIdentity parentIdentity = serializer.deserialize(new String(UtilsConstantes.getBytesFromFile(new File(UtilsConstantes.getParentResponse())), UtilsConstantes.UTF8));
-			// // 1. Crear Payload y guardarlo
-			final KeyPair RPKI_CA_CERT_REQUEST_KEYPAIR = GenerarKeyPair.generarParClave();
-			StoragekeyPair.almacenarKeyPairIssuanceRequest(RPKI_CA_CERT_REQUEST_KEYPAIR);
-
+			ParentIdentity parentIdentity = serializer.deserialize(new String(Utils.getBytesFromFile(new File(Utils.getParentResponse())), Utils.UTF8));
+			// // 1. Crear request xml
 			// final KeyPair RPKI_CA_CERT_REQUEST_KEYPAIR =
-			// StoragekeyPair.cargarIssuanceKeyPair("public_issuance.key",
-			// "private_issuance.key");
+			// GenerarKeyPair.generarParClave();
+			final KeyPair RPKI_CA_CERT_REQUEST_KEYPAIR = StoragekeyPair.cargarKeyPair(issuancePath, issuancePublicKeyName, issuancePrivateKeyName);
+			StoragekeyPair.almacenarKeyPair(issuancePath, RPKI_CA_CERT_REQUEST_KEYPAIR, issuancePublicKeyName, issuancePrivateKeyName);
 
 			final CertificateIssuanceRequestPayload TEST_CERTIFICATE_ISSUANCE_REQUEST_PAYLOAD = createCertificateIssuanceRequestPayloadForPkcs10RequestAux(createRpkiCaCertificateRequest(RPKI_CA_CERT_REQUEST_KEYPAIR), asn, ipv4, ipv6);
 			TEST_CERTIFICATE_ISSUANCE_REQUEST_PAYLOAD.setRecipient(parentIdentity.getParentHandle());
@@ -86,29 +84,26 @@ public class Issue {
 			String actualXml = SERIALIZER.serialize(TEST_CERTIFICATE_ISSUANCE_REQUEST_PAYLOAD);
 			String instant = new Date().toString();
 			String issuanceName = "issuance-request" + instant + ".xml";
-			writeToDisk(issuanceName, actualXml);
+			Utils.writeToDisk(issuancePath, issuanceName, actualXml);
 			System.out.println(actualXml);
 
-			// // hasta aca, fin 1.
-
-			// 2. Obtener Xml y realizar parseo
-			// y Obtener Certificado y KeyPair del Child, para crear CMS
-			String xmlRequestIssuancePayload = new String(UtilsConstantes.getBytesFromFile(new File(UtilsConstantes.getIssuanceRequestAux(issuanceName))), UtilsConstantes.UTF8);
+			// 2. Crear CMS
+			String xmlRequestIssuancePayload = new String(Utils.getBytesFromFile(new File(Utils.getIssuanceRequestAux(issuanceName))), Utils.UTF8);
 			System.out.println(xmlRequestIssuancePayload);
 			CertificateIssuanceRequestPayload payload = SERIALIZER.deserialize(xmlRequestIssuancePayload);
 
-			X509Certificate childCertificate = X509CertificateParser.parseX509Certificate(Files.toByteArray(new File(UtilsConstantes.getChildCert())));
+			X509Certificate childCertificate = X509CertificateParser.parseX509Certificate(Files.toByteArray(new File(Utils.getChildCert())));
 			ProvisioningIdentityCertificate provisioning = new ProvisioningIdentityCertificate(childCertificate);
-			KeyPair keyPairCliente = StoragekeyPair.cargarKeyPair();
+			KeyPair keyPairCliente = StoragekeyPair.cargarKeyPair(childPath, childPublicKeyName, childPrivateKeyName);
 			final KeyPair EE_KEYPAIR = GenerarKeyPair.generarParClave();
-			StoragekeyPair.almacenarKeyPairEndEntityCMS(EE_KEYPAIR);
+			StoragekeyPair.almacenarKeyPair(issuancePath, EE_KEYPAIR, eEPublicKeyName, eEPrivateKeyName);
 			String cmsName = "certificate-issuance-request" + instant + ".cms";
-			createValidCmsObjectAndWriteItToDisk(EE_KEYPAIR, payload, cmsName, keyPairCliente, provisioning);
-			System.out.println("Todo bien");
-			// Hasta aca, fin 2.
+			Utils.createValidCmsObjec(issuancePath, EE_KEYPAIR, payload, cmsName, keyPairCliente, provisioning);
+			// createValidCmsObjectAndWriteItToDisk(EE_KEYPAIR, payload,
+			// cmsName, keyPairCliente, provisioning);
 
 			// 3. Enviar CMS
-			byte[] cmsIssuanceRequest = Files.toByteArray(new File(UtilsConstantes.getChildCMSRequestAux(cmsName)));
+			byte[] cmsIssuanceRequest = Files.toByteArray(new File(Utils.getChildCMSRequestAux(cmsName)));
 			byte[] cmsResponse = RPKIProvisioningWsClient.updown(cmsIssuanceRequest);
 			if (cmsResponse != null) {
 				ProvisioningCmsObjectParser parser = new ProvisioningCmsObjectParser();
@@ -122,13 +117,13 @@ public class Issue {
 					CertificateIssuanceResponsePayload payload2 = (CertificateIssuanceResponsePayload) provisioningCmsObject.getPayload();
 					XStreamXmlSerializer<CertificateIssuanceResponsePayload> SERIALIZER2 = new CertificateIssuanceResponsePayloadSerializerBuilder().build();
 					String issuanceResponseXml = SERIALIZER2.serialize(payload2);
-					writeToDisk("parent-issuance-response" + instant + ".xml", issuanceResponseXml);
+					Utils.writeToDisk(issuancePath, "parent-issuance-response" + instant + ".xml", issuanceResponseXml);
 					System.out.println(issuanceResponseXml);
 				} else {
 					RequestNotPerformedResponsePayload payloadError = (RequestNotPerformedResponsePayload) provisioningCmsObject.getPayload();
 					XStreamXmlSerializer<RequestNotPerformedResponsePayload> SERIALIZER3 = new RequestNotPerformedResponsePayloadSerializerBuilder().build();
 					String issuanceErrorResponseXml = SERIALIZER3.serialize(payloadError);
-					writeToDisk("parent-issuance-error-response", issuanceErrorResponseXml);
+					Utils.writeToDisk(issuancePath, "parent-issuance-error-response", issuanceErrorResponseXml);
 					System.out.println(issuanceErrorResponseXml);
 				}
 			} else
@@ -182,65 +177,87 @@ public class Issue {
 		return pkcs10Request;
 	}
 
-	public static void createValidCmsObjectAndWriteItToDisk(KeyPair EE_KEYPAIR, AbstractProvisioningPayload payload, String fileName, KeyPair keyPairCliente, ProvisioningIdentityCertificate childCertificate) throws IOException {
-		ProvisioningCmsObject resourceClassIssuanceQueryCms = createProvisioningCmsObjectForPayload(EE_KEYPAIR, payload, keyPairCliente, childCertificate);
-		validateCmsObject(resourceClassIssuanceQueryCms, childCertificate);
-		writeToDisk(fileName, resourceClassIssuanceQueryCms.getEncoded());
-	}
-
-	public static void validateCmsObject(ProvisioningCmsObject resourceClassIssuanceQueryCms, ProvisioningIdentityCertificate childCertificate) {
-		ProvisioningCmsObjectValidator validator = new ProvisioningCmsObjectValidator(new ValidationOptions(), resourceClassIssuanceQueryCms, childCertificate);
-		ValidationResult result = ValidationResult.withLocation("n/a");
-		validator.validate(result);
-		// assertTrue(!result.hasFailures());
-	}
-
-	public static ProvisioningCmsObject createProvisioningCmsObjectForPayload(KeyPair EE_KEYPAIR, AbstractProvisioningPayload payload, KeyPair keyPairCliente, ProvisioningIdentityCertificate childCertificate) {
-		ProvisioningCmsObjectBuilder builder = new ProvisioningCmsObjectBuilder();
-		builder.withCmsCertificate(getTestProvisioningCmsCertificate(EE_KEYPAIR, keyPairCliente, childCertificate).getCertificate());
-		builder.withCrl(generateCrl(keyPairCliente));
-		builder.withSignatureProvider(X509CertificateBuilderHelper.DEFAULT_SIGNATURE_PROVIDER);
-		builder.withPayloadContent(payload);
-		return builder.build(EE_KEYPAIR.getPrivate());
-	}
-
-	private static ProvisioningCmsCertificate getTestProvisioningCmsCertificate(KeyPair EE_KEYPAIR, KeyPair keyPairCliente, ProvisioningIdentityCertificate childCertificate) {
-		ProvisioningCmsCertificateBuilder cmsCertificateBuilder = getTestBuilder(EE_KEYPAIR, keyPairCliente, childCertificate);
-		return cmsCertificateBuilder.build();
-	}
-
-	private static ProvisioningCmsCertificateBuilder getTestBuilder(KeyPair EE_KEYPAIR, KeyPair keyPairCliente, ProvisioningIdentityCertificate childCertificate) {
-		ProvisioningCmsCertificateBuilder builder = new ProvisioningCmsCertificateBuilder();
-		builder.withIssuerDN(childCertificate.getSubject());
-		builder.withSerial(BigInteger.TEN);
-		builder.withPublicKey(EE_KEYPAIR.getPublic());
-		builder.withSubjectDN(new X500Principal("CN=end-entity"));
-		builder.withSigningKeyPair(keyPairCliente);
-		builder.withSignatureProvider(X509CertificateBuilderHelper.DEFAULT_SIGNATURE_PROVIDER);
-		return builder;
-	}
-
-	private static X509CRL generateCrl(KeyPair keyPairCliente) {
-		X509CrlBuilder builder = new X509CrlBuilder();
-		builder.withIssuerDN(new X500Principal("CN=NIC O=NICBR"));
-		builder.withAuthorityKeyIdentifier(keyPairCliente.getPublic());
-		DateTime now = new DateTime();
-		builder.withThisUpdateTime(now);
-		builder.withNextUpdateTime(now.plusHours(24));
-		builder.withNumber(BigInteger.TEN);
-
-		return builder.build(keyPairCliente.getPrivate()).getCrl();
-	}
-
-	private static void writeToDisk(String fileName, byte[] encoded) throws IOException {
-		File file = new File(UtilsConstantes.getRutaIssuance() + fileName);
-		Files.write(encoded, file);
-	}
-
-	private static void writeToDisk(String fileName, String xml) throws IOException {
-		File file = new File(UtilsConstantes.getRutaIssuance() + fileName);
-		Files.write(xml, file, Charset.forName("UTF-8"));
-
-	}
+	// public static void createValidCmsObjectAndWriteItToDisk(KeyPair
+	// EE_KEYPAIR, AbstractProvisioningPayload payload, String fileName, KeyPair
+	// keyPairCliente, ProvisioningIdentityCertificate childCertificate) throws
+	// Exception {
+	// ProvisioningCmsObject resourceClassIssuanceQueryCms =
+	// createProvisioningCmsObjectForPayload(EE_KEYPAIR, payload,
+	// keyPairCliente, childCertificate);
+	// validateCmsObject(resourceClassIssuanceQueryCms, childCertificate);
+	// writeToDisk(fileName, resourceClassIssuanceQueryCms.getEncoded());
+	// }
+	//
+	// public static void validateCmsObject(ProvisioningCmsObject
+	// resourceClassIssuanceQueryCms, ProvisioningIdentityCertificate
+	// childCertificate) {
+	// ProvisioningCmsObjectValidator validator = new
+	// ProvisioningCmsObjectValidator(new ValidationOptions(),
+	// resourceClassIssuanceQueryCms, childCertificate);
+	// ValidationResult result = ValidationResult.withLocation("n/a");
+	// validator.validate(result);
+	// // assertTrue(!result.hasFailures());
+	// }
+	//
+	// public static ProvisioningCmsObject
+	// createProvisioningCmsObjectForPayload(KeyPair EE_KEYPAIR,
+	// AbstractProvisioningPayload payload, KeyPair keyPairCliente,
+	// ProvisioningIdentityCertificate childCertificate) {
+	// ProvisioningCmsObjectBuilder builder = new
+	// ProvisioningCmsObjectBuilder();
+	// builder.withCmsCertificate(getTestProvisioningCmsCertificate(EE_KEYPAIR,
+	// keyPairCliente, childCertificate).getCertificate());
+	// builder.withCrl(generateCrl(keyPairCliente));
+	// builder.withSignatureProvider(X509CertificateBuilderHelper.DEFAULT_SIGNATURE_PROVIDER);
+	// builder.withPayloadContent(payload);
+	// return builder.build(EE_KEYPAIR.getPrivate());
+	// }
+	//
+	// private static ProvisioningCmsCertificate
+	// getTestProvisioningCmsCertificate(KeyPair EE_KEYPAIR, KeyPair
+	// keyPairCliente, ProvisioningIdentityCertificate childCertificate) {
+	// ProvisioningCmsCertificateBuilder cmsCertificateBuilder =
+	// getTestBuilder(EE_KEYPAIR, keyPairCliente, childCertificate);
+	// return cmsCertificateBuilder.build();
+	// }
+	//
+	// private static ProvisioningCmsCertificateBuilder getTestBuilder(KeyPair
+	// EE_KEYPAIR, KeyPair keyPairCliente, ProvisioningIdentityCertificate
+	// childCertificate) {
+	// ProvisioningCmsCertificateBuilder builder = new
+	// ProvisioningCmsCertificateBuilder();
+	// builder.withIssuerDN(childCertificate.getSubject());
+	// builder.withSerial(BigInteger.TEN);
+	// builder.withPublicKey(EE_KEYPAIR.getPublic());
+	// builder.withSubjectDN(new X500Principal("CN=end-entity"));
+	// builder.withSigningKeyPair(keyPairCliente);
+	// builder.withSignatureProvider(X509CertificateBuilderHelper.DEFAULT_SIGNATURE_PROVIDER);
+	// return builder;
+	// }
+	//
+	// private static X509CRL generateCrl(KeyPair keyPairCliente) {
+	// X509CrlBuilder builder = new X509CrlBuilder();
+	// builder.withIssuerDN(new X500Principal("CN=NIC O=NICBR"));
+	// builder.withAuthorityKeyIdentifier(keyPairCliente.getPublic());
+	// DateTime now = new DateTime();
+	// builder.withThisUpdateTime(now);
+	// builder.withNextUpdateTime(now.plusHours(24));
+	// builder.withNumber(BigInteger.TEN);
+	//
+	// return builder.build(keyPairCliente.getPrivate()).getCrl();
+	// }
+	//
+	// private static void writeToDisk(String fileName, byte[] encoded) throws
+	// IOException {
+	// File file = new File(Utils.getRutaIssuance() + fileName);
+	// Files.write(encoded, file);
+	// }
+	//
+	// private static void writeToDisk(String fileName, String xml) throws
+	// IOException {
+	// File file = new File(Utils.getRutaIssuance() + fileName);
+	// Files.write(xml, file, Charset.forName("UTF-8"));
+	//
+	// }
 
 }

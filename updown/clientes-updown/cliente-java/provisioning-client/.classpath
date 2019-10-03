@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="/Users/carlosortiz/servers/wildfly-10.1.0.Final/modules/system/layers/base/org/apache/httpcomponents/main/httpcore-nio-4.4.1.jar"/>
 	<classpathentry kind="lib" path="/Users/carlosortiz/servers/wildfly-10.1.0.Final/modules/system/layers/base/org/apache/httpcomponents/main/httpmime-4.5.jar"/>
 	<classpathentry kind="lib" path="/Users/carlosortiz/servers/wildfly-10.1.0.Final/modules/system/layers/base/org/apache/commons/io/main/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="/Users/carlosortiz/servers/wildfly-10.1.0.Final/modules/system/layers/base/org/apache/commons/logging2/main/commons-logging-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -14,6 +14,8 @@ DESCRIPCIÓN TAREA:
 
 Realizar operaciones updown, a través de cliente updown de LACNIC y generar reporte en resultados.
 
+Copiar carpeta_recursos en home personal.
+
 Recursos:
 Documentación RFCs:
  - https://tools.ietf.org/html/rfc8183
