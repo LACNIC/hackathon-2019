@@ -7,9 +7,11 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.KeyPair;
+import java.security.MessageDigest;
 import java.security.cert.X509CRL;
 
 import javax.security.auth.x500.X500Principal;
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import org.joda.time.DateTime;
 
@@ -194,7 +196,7 @@ public class Utils {
 		return builder.build(keyPairCliente.getPrivate()).getCrl();
 	}
 
-	private static void writeToDisk(String path, String fileName, byte[] encoded) throws IOException {
+	public static void writeToDisk(String path, String fileName, byte[] encoded) throws IOException {
 		File file = new File(path + fileName);
 		Files.write(encoded, file);
 	}
@@ -203,5 +205,26 @@ public class Utils {
 		File file = new File(path + fileName);
 		Files.write(xml, file, Charset.forName("UTF-8"));
 
+	}
+
+	public static String wantHashSHA1(byte[] buffer) throws Exception {
+		MessageDigest md = MessageDigest.getInstance("SHA1");
+		md.update(buffer);
+		byte[] digest = md.digest();
+		HexBinaryAdapter hex = new HexBinaryAdapter();
+		return hex.marshal(digest).toLowerCase();
+
+	}
+
+	public static final X500Principal getX500Format(String name) {
+		String principalName = "";
+
+		if (name.contains("CN=") || name.contains("cn=")) {
+			principalName = name;
+		} else {
+			principalName = "cn=" + name;
+		}
+
+		return new X500Principal(principalName);
 	}
 }

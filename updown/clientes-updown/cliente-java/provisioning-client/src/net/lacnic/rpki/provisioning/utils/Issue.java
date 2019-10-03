@@ -71,16 +71,17 @@ public class Issue {
 		try {
 			ParentIdentitySerializer serializer = new ParentIdentitySerializer();
 			ParentIdentity parentIdentity = serializer.deserialize(new String(Utils.getBytesFromFile(new File(Utils.getParentResponse())), Utils.UTF8));
-			// // 1. Crear request xml
+			// 1. Crear request xml
+			final KeyPair RPKI_CA_CERT_REQUEST_KEYPAIR = GenerarKeyPair.generarParClave();
 			// final KeyPair RPKI_CA_CERT_REQUEST_KEYPAIR =
-			// GenerarKeyPair.generarParClave();
-			final KeyPair RPKI_CA_CERT_REQUEST_KEYPAIR = StoragekeyPair.cargarKeyPair(issuancePath, issuancePublicKeyName, issuancePrivateKeyName);
+			// StoragekeyPair.cargarKeyPair(issuancePath, issuancePublicKeyName,
+			// issuancePrivateKeyName);
 			StoragekeyPair.almacenarKeyPair(issuancePath, RPKI_CA_CERT_REQUEST_KEYPAIR, issuancePublicKeyName, issuancePrivateKeyName);
 
 			final CertificateIssuanceRequestPayload TEST_CERTIFICATE_ISSUANCE_REQUEST_PAYLOAD = createCertificateIssuanceRequestPayloadForPkcs10RequestAux(createRpkiCaCertificateRequest(RPKI_CA_CERT_REQUEST_KEYPAIR), asn, ipv4, ipv6);
 			TEST_CERTIFICATE_ISSUANCE_REQUEST_PAYLOAD.setRecipient(parentIdentity.getParentHandle());
 			TEST_CERTIFICATE_ISSUANCE_REQUEST_PAYLOAD.setSender(parentIdentity.getChildHandle());
-			//
+
 			String actualXml = SERIALIZER.serialize(TEST_CERTIFICATE_ISSUANCE_REQUEST_PAYLOAD);
 			String instant = new Date().toString();
 			String issuanceName = "issuance-request" + instant + ".xml";
@@ -99,8 +100,6 @@ public class Issue {
 			StoragekeyPair.almacenarKeyPair(issuancePath, EE_KEYPAIR, eEPublicKeyName, eEPrivateKeyName);
 			String cmsName = "certificate-issuance-request" + instant + ".cms";
 			Utils.createValidCmsObjec(issuancePath, EE_KEYPAIR, payload, cmsName, keyPairCliente, provisioning);
-			// createValidCmsObjectAndWriteItToDisk(EE_KEYPAIR, payload,
-			// cmsName, keyPairCliente, provisioning);
 
 			// 3. Enviar CMS
 			byte[] cmsIssuanceRequest = Files.toByteArray(new File(Utils.getChildCMSRequestAux(cmsName)));
@@ -176,88 +175,4 @@ public class Issue {
 		PKCS10CertificationRequest pkcs10Request = requestBuilder.build(RPKI_CA_CERT_REQUEST_KEYPAIR);
 		return pkcs10Request;
 	}
-
-	// public static void createValidCmsObjectAndWriteItToDisk(KeyPair
-	// EE_KEYPAIR, AbstractProvisioningPayload payload, String fileName, KeyPair
-	// keyPairCliente, ProvisioningIdentityCertificate childCertificate) throws
-	// Exception {
-	// ProvisioningCmsObject resourceClassIssuanceQueryCms =
-	// createProvisioningCmsObjectForPayload(EE_KEYPAIR, payload,
-	// keyPairCliente, childCertificate);
-	// validateCmsObject(resourceClassIssuanceQueryCms, childCertificate);
-	// writeToDisk(fileName, resourceClassIssuanceQueryCms.getEncoded());
-	// }
-	//
-	// public static void validateCmsObject(ProvisioningCmsObject
-	// resourceClassIssuanceQueryCms, ProvisioningIdentityCertificate
-	// childCertificate) {
-	// ProvisioningCmsObjectValidator validator = new
-	// ProvisioningCmsObjectValidator(new ValidationOptions(),
-	// resourceClassIssuanceQueryCms, childCertificate);
-	// ValidationResult result = ValidationResult.withLocation("n/a");
-	// validator.validate(result);
-	// // assertTrue(!result.hasFailures());
-	// }
-	//
-	// public static ProvisioningCmsObject
-	// createProvisioningCmsObjectForPayload(KeyPair EE_KEYPAIR,
-	// AbstractProvisioningPayload payload, KeyPair keyPairCliente,
-	// ProvisioningIdentityCertificate childCertificate) {
-	// ProvisioningCmsObjectBuilder builder = new
-	// ProvisioningCmsObjectBuilder();
-	// builder.withCmsCertificate(getTestProvisioningCmsCertificate(EE_KEYPAIR,
-	// keyPairCliente, childCertificate).getCertificate());
-	// builder.withCrl(generateCrl(keyPairCliente));
-	// builder.withSignatureProvider(X509CertificateBuilderHelper.DEFAULT_SIGNATURE_PROVIDER);
-	// builder.withPayloadContent(payload);
-	// return builder.build(EE_KEYPAIR.getPrivate());
-	// }
-	//
-	// private static ProvisioningCmsCertificate
-	// getTestProvisioningCmsCertificate(KeyPair EE_KEYPAIR, KeyPair
-	// keyPairCliente, ProvisioningIdentityCertificate childCertificate) {
-	// ProvisioningCmsCertificateBuilder cmsCertificateBuilder =
-	// getTestBuilder(EE_KEYPAIR, keyPairCliente, childCertificate);
-	// return cmsCertificateBuilder.build();
-	// }
-	//
-	// private static ProvisioningCmsCertificateBuilder getTestBuilder(KeyPair
-	// EE_KEYPAIR, KeyPair keyPairCliente, ProvisioningIdentityCertificate
-	// childCertificate) {
-	// ProvisioningCmsCertificateBuilder builder = new
-	// ProvisioningCmsCertificateBuilder();
-	// builder.withIssuerDN(childCertificate.getSubject());
-	// builder.withSerial(BigInteger.TEN);
-	// builder.withPublicKey(EE_KEYPAIR.getPublic());
-	// builder.withSubjectDN(new X500Principal("CN=end-entity"));
-	// builder.withSigningKeyPair(keyPairCliente);
-	// builder.withSignatureProvider(X509CertificateBuilderHelper.DEFAULT_SIGNATURE_PROVIDER);
-	// return builder;
-	// }
-	//
-	// private static X509CRL generateCrl(KeyPair keyPairCliente) {
-	// X509CrlBuilder builder = new X509CrlBuilder();
-	// builder.withIssuerDN(new X500Principal("CN=NIC O=NICBR"));
-	// builder.withAuthorityKeyIdentifier(keyPairCliente.getPublic());
-	// DateTime now = new DateTime();
-	// builder.withThisUpdateTime(now);
-	// builder.withNextUpdateTime(now.plusHours(24));
-	// builder.withNumber(BigInteger.TEN);
-	//
-	// return builder.build(keyPairCliente.getPrivate()).getCrl();
-	// }
-	//
-	// private static void writeToDisk(String fileName, byte[] encoded) throws
-	// IOException {
-	// File file = new File(Utils.getRutaIssuance() + fileName);
-	// Files.write(encoded, file);
-	// }
-	//
-	// private static void writeToDisk(String fileName, String xml) throws
-	// IOException {
-	// File file = new File(Utils.getRutaIssuance() + fileName);
-	// Files.write(xml, file, Charset.forName("UTF-8"));
-	//
-	// }
-
 }

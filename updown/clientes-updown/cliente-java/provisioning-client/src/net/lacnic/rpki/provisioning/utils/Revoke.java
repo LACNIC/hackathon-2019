@@ -68,8 +68,6 @@ public class Revoke {
 			String revokeName = "revoke-request" + instant + ".xml";
 			Utils.writeToDisk(revokePath, revokeName, SERIALIZER.serialize(TEST_CERTIFICATE_REVOCATION_QUERY_PAYLOAD));
 
-			// // hasta acá. 1
-
 			// 2. Crear CMS
 			String xmlRevokeRequestPayload = new String(Utils.getBytesFromFile(new File(Utils.getRevokeRequestPayLoadAux(revokeName))), Utils.UTF8);
 			System.out.println(xmlRevokeRequestPayload);
@@ -82,10 +80,6 @@ public class Revoke {
 			StoragekeyPair.almacenarKeyPair(revokePath, EE_KEYPAIR, eEPublicKeyName, eEPrivateKeyName);
 			String cmsName = "revoke-request" + instant + ".cms";
 			Utils.createValidCmsObjec(revokePath, EE_KEYPAIR, payload, cmsName, keyPairCliente, provisioning);
-
-			// createValidCmsObjectAndWriteItToDisk(EE_KEYPAIR, payload,
-			// cmsName, keyPairCliente, provisioning);
-			// // Hasta aca, fin 2.
 
 			// 3. Enviar CMS
 			byte[] cmsRevokeRequest = Files.toByteArray(new File(Utils.getChildRevokeCMSRequestAux(cmsName)));
@@ -121,87 +115,4 @@ public class Revoke {
 		builder.withPublicKey(publicKey);
 		return builder.build();
 	}
-
-	// public static void createValidCmsObjectAndWriteItToDisk(KeyPair
-	// EE_KEYPAIR, AbstractProvisioningPayload payload, String fileName, KeyPair
-	// keyPairCliente, ProvisioningIdentityCertificate childCertificate) throws
-	// IOException {
-	// ProvisioningCmsObject revokeRequestQueryCms =
-	// createProvisioningCmsObjectForPayload(EE_KEYPAIR, payload,
-	// keyPairCliente, childCertificate);
-	// validateCmsObject(revokeRequestQueryCms, childCertificate);
-	// writeToDisk(fileName, revokeRequestQueryCms.getEncoded());
-	// }
-	//
-	// public static void validateCmsObject(ProvisioningCmsObject
-	// revokeRequestQueryCms, ProvisioningIdentityCertificate childCertificate)
-	// {
-	// ProvisioningCmsObjectValidator validator = new
-	// ProvisioningCmsObjectValidator(new ValidationOptions(),
-	// revokeRequestQueryCms, childCertificate);
-	// ValidationResult result = ValidationResult.withLocation("n/a");
-	// validator.validate(result);
-	// // assertTrue(!result.hasFailures());
-	// }
-	//
-	// public static ProvisioningCmsObject
-	// createProvisioningCmsObjectForPayload(KeyPair EE_KEYPAIR,
-	// AbstractProvisioningPayload payload, KeyPair keyPairCliente,
-	// ProvisioningIdentityCertificate childCertificate) {
-	// ProvisioningCmsObjectBuilder builder = new
-	// ProvisioningCmsObjectBuilder();
-	// builder.withCmsCertificate(getTestProvisioningCmsCertificate(EE_KEYPAIR,
-	// keyPairCliente, childCertificate).getCertificate());
-	// builder.withCrl(generateCrl(keyPairCliente));
-	// builder.withSignatureProvider(DEFAULT_SIGNATURE_PROVIDER);
-	// builder.withPayloadContent(payload);
-	// return builder.build(EE_KEYPAIR.getPrivate());
-	// }
-	//
-	// private static ProvisioningCmsCertificate
-	// getTestProvisioningCmsCertificate(KeyPair EE_KEYPAIR, KeyPair
-	// keyPairCliente, ProvisioningIdentityCertificate childCertificate) {
-	// ProvisioningCmsCertificateBuilder cmsCertificateBuilder =
-	// getTestBuilder(EE_KEYPAIR, keyPairCliente, childCertificate);
-	// return cmsCertificateBuilder.build();
-	// }
-	//
-	// private static ProvisioningCmsCertificateBuilder getTestBuilder(KeyPair
-	// EE_KEYPAIR, KeyPair keyPairCliente, ProvisioningIdentityCertificate
-	// childCertificate) {
-	// ProvisioningCmsCertificateBuilder builder = new
-	// ProvisioningCmsCertificateBuilder();
-	// builder.withIssuerDN(childCertificate.getSubject());
-	// builder.withSerial(BigInteger.TEN);
-	// builder.withPublicKey(EE_KEYPAIR.getPublic());
-	// builder.withSubjectDN(new X500Principal("CN=end-entity"));
-	// builder.withSigningKeyPair(keyPairCliente);
-	// builder.withSignatureProvider(DEFAULT_SIGNATURE_PROVIDER);
-	// return builder;
-	// }
-	//
-	// private static X509CRL generateCrl(KeyPair keyPairCliente) {
-	// X509CrlBuilder builder = new X509CrlBuilder();
-	// builder.withIssuerDN(new X500Principal("CN=lacnic prueba"));
-	// builder.withAuthorityKeyIdentifier(keyPairCliente.getPublic());
-	// DateTime now = new DateTime();
-	// builder.withThisUpdateTime(now);
-	// builder.withNextUpdateTime(now.plusHours(24));
-	// builder.withNumber(BigInteger.TEN);
-	//
-	// return builder.build(keyPairCliente.getPrivate()).getCrl();
-	// }
-	//
-	// private static void writeToDisk(String fileName, byte[] encoded) throws
-	// IOException {
-	// File file = new File(Utils.getRutaRevoke() + fileName);
-	// Files.write(encoded, file);
-	// }
-	//
-	// private static void writeToDisk(String fileName, String xml) throws
-	// IOException {
-	// File file = new File(Utils.getRutaRevoke() + fileName);
-	// Files.write(xml, file, Charset.forName("UTF-8"));
-	//
-	// }
 }

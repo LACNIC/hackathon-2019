@@ -77,9 +77,6 @@ public class List {
 			String cmsName = "list-request" + instant + ".cms";
 			Utils.createValidCmsObjec(listPath, EE_KEYPAIR, payload, cmsName, keyPairCliente, provisioning);
 
-			// createValidCmsObjectAndWriteItToDisk(EE_KEYPAIR, payload,
-			// cmsName, keyPairCliente, provisioning);
-
 			// 3. Enviar CMS
 			byte[] cmsListRequest = Files.toByteArray(new File(Utils.getChildListCMSRequestAux(cmsName)));
 			byte[] cmsResponse = RPKIProvisioningWsClient.updown(cmsListRequest);
@@ -112,87 +109,4 @@ public class List {
 		ResourceClassListQueryPayloadBuilder builder = new ResourceClassListQueryPayloadBuilder();
 		return builder.build();
 	}
-
-	// public static void createValidCmsObjectAndWriteItToDisk(KeyPair
-	// EE_KEYPAIR, AbstractProvisioningPayload payload, String fileName, KeyPair
-	// keyPairCliente, ProvisioningIdentityCertificate childCertificate) throws
-	// IOException {
-	// ProvisioningCmsObject resourceClassListQueryCms =
-	// createProvisioningCmsObjectForPayload(EE_KEYPAIR, payload,
-	// keyPairCliente, childCertificate);
-	// validateCmsObject(resourceClassListQueryCms, childCertificate);
-	// writeToDisk(fileName, resourceClassListQueryCms.getEncoded());
-	// }
-	//
-	// public static void validateCmsObject(ProvisioningCmsObject
-	// resourceClassListQueryCms, ProvisioningIdentityCertificate
-	// childCertificate) {
-	// ProvisioningCmsObjectValidator validator = new
-	// ProvisioningCmsObjectValidator(new ValidationOptions(),
-	// resourceClassListQueryCms, childCertificate);
-	// ValidationResult result = ValidationResult.withLocation("n/a");
-	// validator.validate(result);
-	// // assertTrue(!result.hasFailures());
-	// }
-	//
-	// public static ProvisioningCmsObject
-	// createProvisioningCmsObjectForPayload(KeyPair EE_KEYPAIR,
-	// AbstractProvisioningPayload payload, KeyPair keyPairCliente,
-	// ProvisioningIdentityCertificate childCertificate) {
-	// ProvisioningCmsObjectBuilder builder = new
-	// ProvisioningCmsObjectBuilder();
-	// builder.withCmsCertificate(getTestProvisioningCmsCertificate(EE_KEYPAIR,
-	// keyPairCliente, childCertificate).getCertificate());
-	// builder.withCrl(generateCrl(keyPairCliente));
-	// builder.withSignatureProvider(DEFAULT_SIGNATURE_PROVIDER);
-	// builder.withPayloadContent(payload);
-	// return builder.build(EE_KEYPAIR.getPrivate());
-	// }
-	//
-	// private static ProvisioningCmsCertificate
-	// getTestProvisioningCmsCertificate(KeyPair EE_KEYPAIR, KeyPair
-	// keyPairCliente, ProvisioningIdentityCertificate childCertificate) {
-	// ProvisioningCmsCertificateBuilder cmsCertificateBuilder =
-	// getTestBuilder(EE_KEYPAIR, keyPairCliente, childCertificate);
-	// return cmsCertificateBuilder.build();
-	// }
-	//
-	// private static ProvisioningCmsCertificateBuilder getTestBuilder(KeyPair
-	// EE_KEYPAIR, KeyPair keyPairCliente, ProvisioningIdentityCertificate
-	// childCertificate) {
-	// ProvisioningCmsCertificateBuilder builder = new
-	// ProvisioningCmsCertificateBuilder();
-	// builder.withIssuerDN(childCertificate.getSubject());
-	// builder.withSerial(BigInteger.TEN);
-	// builder.withPublicKey(EE_KEYPAIR.getPublic());
-	// builder.withSubjectDN(new X500Principal("CN=end-entity"));
-	// builder.withSigningKeyPair(keyPairCliente);
-	// builder.withSignatureProvider(DEFAULT_SIGNATURE_PROVIDER);
-	// return builder;
-	// }
-	//
-	// private static X509CRL generateCrl(KeyPair keyPairCliente) {
-	// X509CrlBuilder builder = new X509CrlBuilder();
-	// builder.withIssuerDN(new X500Principal("CN=lacnic prueba"));
-	// builder.withAuthorityKeyIdentifier(keyPairCliente.getPublic());
-	// DateTime now = new DateTime();
-	// builder.withThisUpdateTime(now);
-	// builder.withNextUpdateTime(now.plusHours(24));
-	// builder.withNumber(BigInteger.TEN);
-	//
-	// return builder.build(keyPairCliente.getPrivate()).getCrl();
-	// }
-	//
-	// private static void writeToDisk(String fileName, byte[] encoded) throws
-	// IOException {
-	// File file = new File(Utils.getRutaList() + fileName);
-	// Files.write(encoded, file);
-	// }
-	//
-	// private static void writeToDisk(String fileName, String xml) throws
-	// IOException {
-	// File file = new File(Utils.getRutaList() + fileName);
-	// Files.write(xml, file, Charset.forName("UTF-8"));
-	//
-	// }
 }

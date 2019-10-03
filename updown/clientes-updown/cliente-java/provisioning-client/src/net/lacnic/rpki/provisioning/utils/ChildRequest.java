@@ -1,25 +1,26 @@
 package net.lacnic.rpki.provisioning.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.security.KeyPair;
 
 import javax.security.auth.x500.X500Principal;
 
 import org.xml.sax.SAXException;
 
-import com.google.common.io.Files;
-
 import net.ripe.rpki.commons.provisioning.identity.ChildIdentity;
 import net.ripe.rpki.commons.provisioning.identity.ChildIdentitySerializer;
 import net.ripe.rpki.commons.provisioning.x509.ProvisioningIdentityCertificate;
 
 public class ChildRequest {
-	public static String TOKEN = "8b4ae5f0-5889-417e-ae93-c38c6ada4541";
-	public static String child_handle = "UY-OPPL-LACNIC-ZS4Fe2";
+	public static String TOKEN = "";
+	public static String child_handle = "";
 	public static final X500Principal SELF_SIGNING_DN_1 = new X500Principal("CN=" + child_handle);
+
+	private static String childPrivateKeyName = "private_child.key";
+	private static String childPublicKeyName = "public_child.key";
+
+	private static String childPath = Utils.getRutaChild();
 
 	public static void main(String[] args) throws Exception {
 		childRequest();
@@ -27,8 +28,9 @@ public class ChildRequest {
 
 	private static void childRequest() throws Exception, IOException, SAXException, UnsupportedEncodingException {
 		final KeyPair KEY_PAIR = GenerarKeyPair.generarParClave();
-		// KeyPair KEY_PAIR = StoragekeyPair.cargarKeyPair();
-		StoragekeyPair.almacenarKeyPair(KEY_PAIR);
+		// KeyPair KEY_PAIR = StoragekeyPair.cargarKeyPair(childPath,
+		// childPublicKeyName, childPrivateKeyName);
+		StoragekeyPair.almacenarKeyPair(childPath, KEY_PAIR, childPublicKeyName, childPrivateKeyName);
 		ProvisioningIdentityCertificate provisioningIdentityCertificate = BuilderBPKI.createProvisioningIdentityCertificate(KEY_PAIR);
 		ChildIdentity childIdentity = new ChildIdentity(child_handle, provisioningIdentityCertificate);
 		ChildIdentitySerializer serializer = new ChildIdentitySerializer();
@@ -44,9 +46,8 @@ public class ChildRequest {
 			System.out.println("No tiene certificado");
 		System.out.println(xml);
 
-		writeToDisk("child-bpki-ta.xml", xml);
-		writeToDisk("child-bpki-ta.cer", childIdentity.getIdentityCertificate().getEncoded());
-		// // // hasta acá. 1
+		Utils.writeToDisk(childPath, "child-bpki-ta.xml", xml);
+		Utils.writeToDisk(childPath, "child-bpki-ta.cer", childIdentity.getIdentityCertificate().getEncoded());
 
 		// // 2. Tomo el child request y lo envió al server
 		// String childXml = new String(UtilsConstantes.getBytesFromFile(new
@@ -61,15 +62,4 @@ public class ChildRequest {
 		// System.out.println("Algo fallo en el servicio");
 		// // 3. Hasta acá
 	}
-
-	private static void writeToDisk(String fileName, String xml) throws IOException {
-		File file = new File(Utils.getRutaChild() + fileName);
-		Files.write(xml, file, Charset.forName("UTF-8"));
-	}
-
-	private static void writeToDisk(String fileName, byte[] encoded) throws IOException {
-		File file = new File(Utils.getRutaChild() + fileName);
-		Files.write(encoded, file);
-	}
-
 }
