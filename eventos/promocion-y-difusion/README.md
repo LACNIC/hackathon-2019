@@ -12,3 +12,6 @@ Realizaremos una serie de capturas en video y fotografía con cámaras de 360º 
 
 ## Tagging & Linking
 Los contenidos conformarán una red de enlaces entre si, permitiendo a la audiencia encontrar micro-contenidos en diferentes canales, permitiendo así un alcance mas diversificado.
+
+## Comunicación y difusión.
+Aquí vamos a distribuir los contenidos producidos en diversos canales sociales o en páginas web.
