@@ -1,4 +1,4 @@
-# PODCASTS
+# Podcasts
 
 _Un podcast es un archivo de audio que puedes descargar y oír en tu teléfono móvil, computadora o dispositivo con acceso a internet, con posibilidad de descargar y reproducir audio. Los archivos se distribuyen mediante un archivo RSS, por lo que permite subscribirse y escucharlo cuando el usuario quiera._
 
