@@ -8,7 +8,7 @@ https://docs.google.com/presentation/d/10verKgEhr-tZQoekelxYoM2cL32DHAMFFzoP2zXX
 ### Perfiles
 https://docs.google.com/document/d/1wDq91rNGfiQWLvLwcA9aMxWPHheWxbRF1n-zY71p6-g/edit?usp=sharing
 
-### TimeLine
+### Timeline
 https://docs.google.com/presentation/d/1DoEkGCDlec1pajUukJvcn8CPVfZhjQXjkTdCEgUU8wA/edit?usp=sharing
 
 ### Retrospectivas
