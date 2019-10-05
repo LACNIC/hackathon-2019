@@ -1,7 +1,7 @@
 # Promoción y difusión
 En este repositorio vamos a encontrar diversas herramientas y formas que permiten generar mayor exposición para el evento LACNIC, con técnicas de experimentación en diversas áreas y canales.
 
-## Podcasts
+## [Podcasts](https://github.com/LACNIC/hackathon-2019/tree/master/eventos/promocion-y-difusion/podcasts)
 Los contenidos serán entrevistas, noticias, hechos históricos y curiosidades relacionados a LACNIC y la comunidad de internet. Se publicarán en diversos canales de distribución como: Spotify, Google Podcast, TuneIn, entre otros.
 
 ## Videos
