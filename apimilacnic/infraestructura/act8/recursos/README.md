@@ -15,6 +15,8 @@ https://api.milacnic-demo.lacnic.net/lacnic/0.9/swagger-ui.html
 
 Las credenciales de acceso al demo del API de MiLACNIC serán entregadas en el lugar.
 
+**Bloque IP de UY-OPPL-LACNIC:** 201.219.252.0/22  
+
 **Documentación Swagger**  
 https://github.com/swagger-api  
 https://github.com/OAI/OpenAPI-Specification  
