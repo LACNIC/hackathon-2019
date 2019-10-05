@@ -11,7 +11,7 @@ https://docs.google.com/presentation/d/1xvkdHkYB7u4IVVpPxmlgSzP-Esjjb0bhIfG2gQz3
 ### Perfiles
 https://docs.google.com/document/d/1wDq91rNGfiQWLvLwcA9aMxWPHheWxbRF1n-zY71p6-g/edit?usp=sharing
 
-### TimeLine
+### Timeline
 https://docs.google.com/presentation/d/1DoEkGCDlec1pajUukJvcn8CPVfZhjQXjkTdCEgUU8wA/edit?usp=sharing
 
 ### Retrospectivas
