@@ -9,5 +9,12 @@ Desplegar IPv6 tiene multiples aristas, pero entre ellas se destacan dos:
 
 ## Anuncio via BGP de los prefijos asignados por LACNIC
 
+- Ambiente virtual (para Vbox): https://s3.amazonaws.com/lacnog-netlab/VMs/mindesktop_gns3_v5.ova
+   - Usuario: vagrant / vagrant
+- VirtualBox: https://www.virtualbox.org/wiki/Downloads
+
+
+
+
 ## Hablitacion de servicios
 
