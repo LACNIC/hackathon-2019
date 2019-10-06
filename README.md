@@ -1,7 +1,10 @@
 # hackathon-2019
 En este repositorio se encuentra toda la información relevante sobre los proyectos presentados por LACNIC en el Hackathon del evento LACNIC 32-LACNOG 2019. 
 
-## Copiar este proyecto
+## Introducción a los proyectos
+https://docs.google.com/document/d/1NQ4opH2SobBFuLekHOc2wVj6N3EMFBqT-3FcqV3czJs/edit?usp=sharing
+
+## Para clonar este proyecto
 git clone https://github.com/LACNIC/hackathon-2019.git
 
 ## Presentaciones
