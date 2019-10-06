@@ -13,5 +13,5 @@ Desplegar IPv6 tiene multiples aristas, pero entre ellas se destacan dos:
    - Usuario: vagrant / vagrant
 - VirtualBox: https://www.virtualbox.org/wiki/Downloads
 
-![Lab](routing-irr/ip6deploy/lab.png)
+![Lab](https://github.com/LACNIC/routing-irr/ip6deploy/lab.png)
 
