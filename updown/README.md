@@ -22,3 +22,9 @@ Por medio de updown, una organización podrá tener su propio certificado firmad
 Presentación updown
 
 https://docs.google.com/presentation/d/1E-KKzhLfiGP5BEBTi5BzLs_FJmdpqnp4AKrIGE9tT60/edit?usp=sharing
+
+
+------
+Trello
+
+https://trello.com/b/wG3iS6Sp/updown
