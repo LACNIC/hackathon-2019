@@ -37,3 +37,10 @@ Sintaxis de los route map de Quagga: https://www.nongnu.org/quagga/docs/docs-mul
 
 #### Ejemplo:
 
+Ejemplos: http://docs.frrouting.org/en/latest/routemap.html
+
+```
+route-map test permit 10
+ match ip address 10
+ set local-preference 200
+``` 
