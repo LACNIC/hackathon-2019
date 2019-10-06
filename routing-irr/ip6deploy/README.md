@@ -17,7 +17,7 @@ Desplegar IPv6 tiene multiples aristas, pero entre ellas se destacan dos:
 
 - Lab de GNS3: https://github.com/LACNIC/hackathon-2019/blob/master/routing-irr/ip6deploy/ipv6deploy.tar.gz?raw=true
 
-Abrirlo dentro de la carpeta $HOME/GNS3/projects con el comando:
+Abrirlo dentro de la carpeta **ANTES DE INICIAR EL GNS3** $HOME/GNS3/projects con el comando:
 
 ```
 tar xzvf ipv6deploy.tar.gz
