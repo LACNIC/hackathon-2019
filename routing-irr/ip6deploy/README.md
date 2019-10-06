@@ -13,8 +13,5 @@ Desplegar IPv6 tiene multiples aristas, pero entre ellas se destacan dos:
    - Usuario: vagrant / vagrant
 - VirtualBox: https://www.virtualbox.org/wiki/Downloads
 
-
-
-
-## Hablitacion de servicios
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 
