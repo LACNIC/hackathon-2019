@@ -1,0 +1,19 @@
+- name:   'Instalación de paquetes iniciales'
+  hosts:  all
+  become: yes
+  tasks:
+ - name: Install a list of packages
+   apt:
+     name: "{{ packages }}"
+   update_cache: yes
+   force:  yes
+   state: present  
+   vars:
+     packages:
+     - unzip
+     - maven
+     - git
+     - curl
+     - python-simplejson
+     - python-pip
+     - python-dev 

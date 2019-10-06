@@ -1,0 +1,53 @@
+#- name:  'Postgres install'
+
+ - include_vars: pass-vault.yaml
+
+ - name: 'Instalar postgres y postgres client'
+   apt:
+     name:  "{{ item }}"
+     update_cache:  yes
+     force: yes
+   with_items:
+     - python-software-properties
+     - libpq-dev
+     - python-psycopg2
+     - postgresql
+     - postgresql-client
+        
+ - name: 'Creando directorio /home/jenkins/dumps/'
+   file:
+     path:  /home/jenkins/dumps/
+     owner: jenkins
+     group: jenkins
+     state: directory
+     mode: 0777
+ 
+ - name: 'Descomprimir dumps eventos-old'
+   unarchive:
+      src:   db/{{ db_dump }}.sql.zip
+      dest:  /home/jenkins/dumps/
+      owner: jenkins
+      group: jenkins
+      mode: 0777
+      remote_src: false
+
+#- name:  'Instalar postgres y configuración'
+
+ - name: 'Crear bd'
+   postgresql_db:
+    name: "{{ item }}"
+   become_user: postgres
+   with_items:
+    - "{{ db_name }}"
+      
+ - name: 'Acceso del usuario a la BD'
+   postgresql_user:
+    db: "{{ db_name }}"
+    name: "{{ db_user }}"
+    password: "{{ db_pass }}"
+    encrypted: yes
+    priv: ALL
+   become_user: postgres
+
+ - shell: "psql {{ db_name }} < /home/jenkins/dumps/{{ db_dump }}.sql"
+   become_user: postgres

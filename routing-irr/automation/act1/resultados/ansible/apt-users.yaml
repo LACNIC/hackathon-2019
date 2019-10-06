@@ -1,0 +1,48 @@
+---
+#- name: 'Creando usuarios y grupos'
+
+     - name: 'Crear grupos'
+       group:
+         name: "{{ item }}"
+         state: present
+       with_items:
+         - ops
+         - jboss
+         - wildfly
+     
+     - name: 'Crear usuarios'
+       user:
+         name: "{{ item.user }}"
+         state: present
+         comment: "{{ item.comment }}"
+         groups: "{{ item.groups }}"
+         append: yes
+       with_items:
+         - { user: 'yazmin', comment: 'Yazmin', groups: 'sudo,ops' }
+         - { user: 'gerardo', comment: 'Gerardo', groups: 'sudo,ops' }
+         - { user: 'gustavo', comment: 'Gustavo', groups: 'sudo,ops' }
+         - { user: 'fperez', comment: 'Fperez', groups: 'sudo,ops'}
+         - { user: 'cortiz', comment: 'Cortiz', groups: 'sudo,ops' }
+         - { user: 'jboss', comment: 'JBoss', groups: 'jboss,ops' }
+         - { user: 'wildfly', comment: 'Wildfly', groups: 'wildfly,ops' }
+         - { user: 'jenkins', comment: 'Jenkins', groups: 'ops' }
+     
+     - name: 'Set authorized key took from file Jenkins'
+       authorized_key:
+         user: "{{ item.user }}"
+         state: present
+         key: "{{ lookup('file', '{{ item.key }}') }}"
+       with_items:
+         - { user: 'jenkins', key: 'keys/jenkins.pub'}     
+         
+     - name: 'Set authorized key took from file'
+       authorized_key:
+         user: "{{ item.user }}"
+         state: present
+         key: "{{ item.key }}"
+       with_items:
+         - { user: 'yazmin', key: 'https://github.com/yazmin48.keys'}
+         - { user: 'gerardo', key: 'https://github.com/grada84.keys'}
+         - { user: 'gustavo', key: 'https://github.com/gustavomuslera.keys'}
+         - { user: 'fperez', key: 'https://github.com/fperez811.keys' }
+         - { user: 'cortiz', key: 'https://github.com/carloso92.keys' }
