@@ -30,9 +30,13 @@ tar xzvf ipv6deploy.tar.gz
 #### Direccionamiento
 
 a. 2001:db8:1::0/64
+
 b. 2001:db8:2::0/64
+
 c. 2001:db8:3::0/64
+
 d. 2001:db8:4::0/64
+
 e. 2001:db8:5::0/64
 
 Servidor Google: 2001:db8:cafe::2
