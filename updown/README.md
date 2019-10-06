@@ -17,3 +17,8 @@ Las operaciones que se pueden realizar mediante Updown son:
 - Revoke response: Por medio de este comando, el server responde a la solicitud (revoke) de revocación de certificados, con el mismo hash de la clave pública que se envió en la solicitud.
 
 Por medio de updown, una organización podrá tener su propio certificado firmado por la CA de LACNIC. En este sentido la organización debe contar con mecanismos para el despliegue de su propia infraestructura RPKI, como el modo hosted donde deberá emitir certificados y tener un repositorio en el cual se garantice la integridad y no repudio de la información publicada y de igual manera esta organización podrá desplegar RPKI mediante updown asumiendo las responsabilidades descritas anteriormente.
+
+------------------
+Presentación updown
+
+https://docs.google.com/presentation/d/1E-KKzhLfiGP5BEBTi5BzLs_FJmdpqnp4AKrIGE9tT60/edit?usp=sharing
