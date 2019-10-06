@@ -15,3 +15,6 @@ Los contenidos conformarán una red de enlaces entre si, permitiendo a la audien
 
 ## Comunicación y difusión.
 Aquí vamos a distribuir los contenidos producidos en diversos canales sociales o en páginas web.
+
+Trello: https://trello.com/invite/b/lgjjEQLp/47f7dac388b6d18068a373fec6f84a53/promoci%C3%B3n-y-difusi%C3%B3n
+Github: https://github.com/LACNIC/hackathon-2019/tree/master/eventos/promocion-y-difusion#podcasts
