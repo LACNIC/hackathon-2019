@@ -6,6 +6,13 @@ La informacion de los IRR puede consultarse por diferentes interfaces, pero part
 
 Dependiendo del fabricante los enrutadores utilizan diferentes lenguajes para expresar estos filtros. Un caso "clasico" es el lenguaje que utilza Quagga, derivado de la CLI de Cisco.
 
+## Flujo basico:
+
+- Consultar route-objetcts
+- Obtener sistema autonomo de origen
+- Generar route-maps
+- Aplicar la configuracion en el router**
+
 ## Recursos
 
 ### Como consultar RADB:
