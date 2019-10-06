@@ -4,11 +4,15 @@ El principal uso de la informacion contenida en un IRR es el generar configuraci
 
 La informacion de los IRR puede consultarse por diferentes interfaces, pero particularmente la interfaz de puerto 43 es util para realizar automatizacion.
 
+Dependiendo del fabricante los enrutadores utilizan diferentes lenguajes para expresar estos filtros. Un caso "clasico" es el lenguaje que utilza Quagga, derivado de la CLI de Cisco.
+
 ## Recursos
+
+### Como consultar RADB:
 
 Como consultar RADB: [https://www.radb.net/support/tutorials/how-to-query-merit-radb.html]
 
-### Ejemplo:
+#### Ejemplo:
 
 ```
 whois -h whois.radb.net 128.223.0.0/16
@@ -26,3 +30,10 @@ mnt-by:        MAINT-AS3582
 changed:       meyer@ns.uoregon.edu 19960222
 source:        RADB
 ```
+
+### Sintaxis de los route-map de Quagga
+
+Sintaxis de los route map de Quagga: https://www.nongnu.org/quagga/docs/docs-multi/Route-Map.html
+
+#### Ejemplo:
+
