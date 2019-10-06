@@ -2,7 +2,7 @@
 
 No vamos a describir aqui la importancia que viene adquiriendo, en la actual coyuntura de Internet, el avanzar con el despliegue de IPv6.
 
-Desplegar IPv6 tiene multiples aristas, pero hay un elemento que es fundamental y previo a cualquier otra iniciativa y es **realizar el anuncio via bgp de los prefijos asignados por LACNIC**
+Desplegar IPv6 tiene multiples aristas, pero hay un elemento que es fundamental y previo a cualquier otra iniciativa y es **realizar el anuncio via bgp de los prefijos asignados por LACNIC**.
 
 En este proyecto les proponemos dos modalidades de trabajo:
 
