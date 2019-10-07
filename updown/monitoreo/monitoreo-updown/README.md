@@ -13,8 +13,7 @@ Antes de empezar con la tarea, debe instalar git en su máquina y clonar el repo
 DESCRIPCIÓN TAREA:
 
 Realizar monitoreo de todas las partes públicas de updown de LACNIC.
--Buscar Formas de monitorear el servicio y detectar que todo está bien.
-- Generar reporte con métricas de monitoreo.
+- Buscar Formas de monitorear el servicio y detectar que todo está bien.
 
 # Nota: Para realizar todas las tareas, acceda a: https://trello.com/b/wG3iS6Sp/updown
 ----------------------------------------------------------------------
