@@ -10,7 +10,9 @@ import net.lacnic.rpki.provisioning.utils.ChildRequest;
 
 public class RPKIProvisioningWsClient {
 
-	private static final String URL_UPDOWN = "https://rpki-demo.lacnic.net/provisioning";
+	// private static final String URL_UPDOWN =
+	// "https://rpki-demo.lacnic.net/provisioning";
+	private static final String URL_UPDOWN = "http://localhost:8180/provisioning";
 	private static final String RPKISUGAR_AUTH_TOKEN = "apikey";
 
 	public RPKIProvisioningWsClient() {
@@ -28,6 +30,15 @@ public class RPKIProvisioningWsClient {
 	public static byte[] updown(byte[] cms) {
 		try {
 			return mandarPostYRecibirRespuesta(URL_UPDOWN + "/rpki-updown", cms);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static String monitoreo(String orgId) {
+		try {
+			return mandarPostYRecibirRespuestaChild(URL_UPDOWN + "/monitoreo", orgId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
