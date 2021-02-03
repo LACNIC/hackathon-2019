@@ -14,12 +14,7 @@ https://swagger.io/
 http://localhost:8080/lacnic/0.9/swagger-ui.html  
 
 **Credenciales de Prueba durante desarrollo:**
-
-**OrgId:** UY-ORG2-LACNIC  
-**User:** apilacnic@gmail.com   
-**Pass:** Apilacnic**  
-**ClientID:** 4vscKpOltDsinfQZR9b7YboPqycOb5rR   
-**ClientSecret:** RZlLVYpPvBfX9e6AJCkrflfpCA8iE2l5bM3It8XsSwtcZI_GujVxVW6-W9KrKZWZ   
+Serán entregadas en el lugar.
 
 **Cosas a tener en cuenta para el funcionamiento del ambiente de desarollo del API**  
 *En el archivo *application.properties* de la carpeta *src/main/resources* hay que sustituir estas variables:  
