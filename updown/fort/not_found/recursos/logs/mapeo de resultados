@@ -1,0 +1,33 @@
+ MAPEO DE RESULTADOS. 
+
+El mapeo de resultados se puede realizar offline y online con el siguiente codigo, para su posterior analisis, de momento se ha
+quedado pendiente en la investigación del analasis para identificar el mejor algoritmo y herramientas para optimizar el manejo del
+alto volumen y velocidad de la generacion de los datos lo cual lleva al proyecto con una caracteristica de Big Data requiriendo la
+Veracidad de los datos. Y de esa cumpliendo las 3 V requeridas para catalogarlo como tal.
+
+Import sys
+
+# input comes from STDIN (standard input)
+for line in sys.stdin:
+    line = line.strip()
+    line = line.split("|")
+
+    if len(line) >=2:
+       dump-type  = line[1]
+       elem-type  = line[2]
+       record-ts  = line[3]
+       project  = line[4]
+       collector  = line[5]
+       peer-ASn  = line[6]
+       peer-IP  = line[7]
+       prefix  = line[8]
+       next-hop-IP = line[9]
+       AS-path  = line[10]
+       origin-AS  = line[11]
+       communities = line[12]
+       old-state  = line[13]
+       new-state= line[14]
+      #Mapeeo de todo el string 
+      #print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (dump-type,elem-type,record-ts,project,collector,peer-ASn,peer-IP,prefix,next-hop-IP,AS-path,origin-AS,communities,old-state,new-state)
+      print '%s\t%s\t' % (record-ts,project,collector,peer-ASn,prefix)
+      
