@@ -1,0 +1,15 @@
+
+
+
+- hosts: localhost
+  become: true
+  tasks:
+  - name: ubuntu update
+    apt: update_cache=yes
+  - name: Descarga FORT
+    get_url:
+      url: https://github.com/NICMx/FORT-validator/releases/download/v1.0.0/fort_1.0.0-1_amd64.deb
+      dest: /home/truxgo/
+  - name: Install a .deb package
+    apt:
+      deb: /home/truxgo/fort_1.0.0-1_amd64.deb
