@@ -1,0 +1,19 @@
+# RPKI
+
+Na Internet usamos o protocolo de roteamento **BGP (Border Gateway Protocol)**. Colocando em termos simples, o BGP é o conjunto de regras de comunicação usados pelos roteadores de borda das redes, dos Sistemas Autônomos (AS), para trocar informações sobre os blocos de endereços IP (IPv6 e IPv4) que estão sob responsabilidade de cada um. Com o BGP, cada rede informa à outra todos os IPs sob sua responsabilidade e também recebe a informação correspondente das redes vizinhas. A informação recebida de um vizinho também é passada para outro. Essa troca de informações acontece em escala global e permite que cada roteador envolvido crie para si um mapa de toda a Internet. Esse mapa é chamado de Tabela de Roteamento Global, ou Tabela de Roteamento BGP. **O BGP é um dos pilares tecnológicos, um dos protocolos mais básicos, sobre os quais se baseia a Internet**.
+
+**Apesar de sua grande importância, o BGP é um protocolo que não é, por si só, seguro**. Isto é, o BGP não tem, de forma automática, mecanismos para validação das informações que envia ou recebe. O que um roteador informa ao outro é tomado como verdade. Isso gera a necessidade de mecanismos de proteção, como filtros, baseados em informações ou bases de dados externos. A [RFC 4593](https://tools.ietf.org/html/rfc4593) "Generic Threats to Routing Protocols" descreve em detalhes várias vulnerabilidades, ataques possíveis aos protocolos de roteamento em geral, não se limitando ao BGP, bem como suas consequências. 
+
+O **RPKI (Resource Public Key Infrastructure)** está especificado na [RFC 6480](https://tools.ietf.org/html/rfc6480) e endereça uma das vulnerabilidades do BGP. O mesmo **provê uma infraestrutura de chaves públicas distribuída**, isto é, descentralizada. Essa infraestrutura permite a uma organização responsável por blocos de endereços IP autorizar um ou mais Sistemas Autônomos (AS) a originar anúncios, ou seja, rotas, na tabela BGP. O caso mais comum é que a organização para a qual um determinado bloco IP está alocado tenha alocado para si própria também um ASN, e no RPKI esse ASN será autorizado a originar os anúncios do bloco IP da organização no BGP. Outros casos são possíveis, contudo. O RPKI permite que esse vínculo entre IPs e ASNs seja verificado de forma segura, usando criptografia. Por meio dessa verificação é possível configurar filtros adequados no BGP, para que a origem de um determinado anúncio de rota recebido pelo roteador seja validada antes do mesmo ser aceito. Esse processo de construção de filtros pode ser automatizado.
+
+É importante notar que **o RPKI por si só não torna o BGP mais seguro**, ele NÃO É uma modificação no protocolo BGP em si para automaticamente resolver os problemas. Em primeiro lugar é necessário que a organização responsável por um bloco IP autorize, usando a infraestrutura do RPKI, um ou mais AS a originar anúncios na tabela de rotas. Uma vez que as redes que compõem a Internet, os cerca de 70.000 AS presentes na tabela BGP, façam isso, é necessário também que os mesmos usem essa informação, agora presente no RPKI de forma confiável e segura, para construir filtros adequados no BGP. **A segurança do BGP melhorará conforme o RPKI for adotado, tanto para a publicação das informações, quanto para a criação de filtro BGP, pelas diversas redes que compõem a Internet**. Contudo, é importante frisar que há outras vulnerabilidades de segurança no BGP não endereçadas pelo RPKI e outros filtros e medidas de segurança são também necessários. 
+
+Vejamos em mais detalhes o que é o RPKI, seus principais componentes, e como pode ser utilizado:
+
+- [Infraestrutura de chaves pública (PKI): conceito e vocabulário](pki)
+- [Como está estruturado o RPKI e quais são seus principais componentes?](rpki)
+- [O protocolo up-down](updown)
+- [O protocolo de publicação](publication)
+- [Os validadores](validators)
+- [Guia passo a passo para o ISP](howto)
+
